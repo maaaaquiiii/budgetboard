@@ -37,3 +37,5 @@ build/
 
 ### Mac OS ###
 .DS_Storetests/node_modules/
+tests/playwright-report/
+tests/test-results/
