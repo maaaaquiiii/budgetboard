@@ -1,4 +1,7 @@
 package com.budgetboard.dto;
 
-public class AuthResponse {
-}
+public record AuthResponse(
+        String token,
+        String email,
+        String name
+) {}

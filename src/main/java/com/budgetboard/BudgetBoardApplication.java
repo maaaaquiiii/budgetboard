@@ -1,4 +1,11 @@
 package com.budgetboard;
 
-public class Budgetboardapplication {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BudgetBoardApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(BudgetBoardApplication.class, args);
+    }
 }

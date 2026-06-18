@@ -1,4 +1,10 @@
 package com.budgetboard.model;
 
-public class Category {
+public enum Category {
+    FOOD,
+    TRANSPORT,
+    SALARY,
+    ENTERTAINMENT,
+    HEALTH,
+    OTHER
 }
