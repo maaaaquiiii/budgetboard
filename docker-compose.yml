@@ -1,0 +1,56 @@
+# ══════════════════════════════════════════════
+# docker-compose.yml — BudgetBoard
+# ══════════════════════════════════════════════
+#
+# Usage:
+#   docker compose up --build        → start everything
+#   docker compose up db -d          → start only PostgreSQL (for local dev)
+#   docker compose down -v           → stop and remove volumes
+#
+# ══════════════════════════════════════════════
+
+services:
+
+  # ── PostgreSQL ──────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: budgetboard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: budgetboard
+      POSTGRES_USER: budgetboard
+      POSTGRES_PASSWORD: budgetboard
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U budgetboard -d budgetboard"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend (Spring Boot) ───────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: budgetboard-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: budgetboard
+      DB_USER: budgetboard
+      DB_PASSWORD: budgetboard
+      JWT_SECRET: ChangeThisSecretInProductionItMustBeAtLeast256BitsLong!
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+    name: budgetboard-postgres-data
