@@ -1,4 +1,5 @@
-import { Transaction } from '../types';
+import React from 'react';
+import type { Transaction } from '../types';
 
 interface Props {
     transactions: Transaction[];
