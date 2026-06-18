@@ -47,7 +47,7 @@ export default function NewTransactionPage() {
 
             <form onSubmit={handleSubmit} style={{ background: '#fff', borderRadius: 12, padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                 <label style={labelStyle}>Amount (€)</label>
-                <input data-testid="amount-input" type="number" min="0.01" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} required style={inputStyle} placeholder="0.00" />
+                <input data-testid="amount-input" type="number" min="0.01" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} style={inputStyle} placeholder="0.00" />
 
                 <label style={labelStyle}>Type</label>
                 <select data-testid="type-select" value={type} onChange={(e) => setType(e.target.value as TransactionType)} style={inputStyle}>
