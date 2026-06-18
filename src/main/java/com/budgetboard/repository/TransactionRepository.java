@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
@@ -22,13 +23,13 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
         FROM Transaction t
         WHERE t.user.id = :userId
           AND t.type = :type
-          AND MONTH(t.date) = :month
-          AND YEAR(t.date) = :year
+          AND t.date >= :startDate
+          AND t.date < :endDate
     """)
-    BigDecimal sumByUserIdAndTypeAndMonth(
+    BigDecimal sumByUserIdAndTypeAndDateRange(
             @Param("userId") Long userId,
             @Param("type") TransactionType type,
-            @Param("month") int month,
-            @Param("year") int year
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
     );
 }

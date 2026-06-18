@@ -66,14 +66,21 @@ public class TransactionService {
     }
 
     public SummaryResponse getSummary(User user) {
-        int month = LocalDate.now().getMonthValue();
-        int year  = LocalDate.now().getYear();
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = now.withDayOfMonth(1);
+        LocalDate endDate = startDate.plusMonths(1);
 
-        BigDecimal income = transactionRepository
-                .sumByUserIdAndTypeAndMonth(user.getId(), TransactionType.INCOME, month, year);
-        BigDecimal expenses = transactionRepository
-                .sumByUserIdAndTypeAndMonth(user.getId(), TransactionType.EXPENSE, month, year);
+        BigDecimal income = transactionRepository.sumByUserIdAndTypeAndDateRange(
+                user.getId(), TransactionType.INCOME, startDate, endDate);
+        BigDecimal expenses = transactionRepository.sumByUserIdAndTypeAndDateRange(
+                user.getId(), TransactionType.EXPENSE, startDate, endDate);
 
-        return new SummaryResponse(income, expenses, income.subtract(expenses), month, year);
+        return new SummaryResponse(
+                income,
+                expenses,
+                income.subtract(expenses),
+                now.getMonthValue(),
+                now.getYear()
+        );
     }
 }
