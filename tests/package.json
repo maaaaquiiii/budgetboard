@@ -1,0 +1,14 @@
+{
+  "name": "budgetboard-tests",
+  "version": "1.0.0",
+  "description": "Playwright E2E test suite for BudgetBoard",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
